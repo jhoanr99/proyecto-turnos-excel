@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exportar Turnos a Excel</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #333; }
+        form { display: flex; flex-direction: column; gap: 1rem; }
+        .date-inputs { display: flex; gap: 1rem; justify-content: center; }
+        .input-group { display: flex; flex-direction: column; align-items: flex-start; }
+        label { margin-bottom: 0.5rem; color: #555; }
+        input[type="date"] { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+        button { padding: 0.75rem; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background-color 0.2s; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Exportar Programación de Turnos</h1>
+        <form action="/excel" method="get">
+            <div class="date-inputs">
+                <div class="input-group">
+                    <label for="ini">Fecha de Inicio:</label>
+                    <input type="date" id="ini" name="ini" required>
+                </div>
+                <div class="input-group">
+                    <label for="fin">Fecha de Fin:</label>
+                    <input type="date" id="fin" name="fin" required>
+                </div>
+            </div>
+            <button type="submit">Generar y Descargar Excel</button>
+        </form>
+    </div>
+</body>
+</html>
