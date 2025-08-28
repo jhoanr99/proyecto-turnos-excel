@@ -13,7 +13,7 @@ from google.cloud.firestore_v1 import FieldFilter
 
 # ------------ Config ------------
 JSON_PATH = 'turnosd1app-firebase-adminsdk-fbsvc-beb0f93c56.json'
-TEMPLATE  = r'C:\Users\PC_WIN11\OneDrive\Documentos\proyecto de android\proyecto_turnos\programacion-y-control-de-horas-actualizado.xlsx'
+TEMPLATE  = 'programacion-y-control-de-horas-actualizado.xlsx'
 
 # Inicializar Firebase
 if not firebase_admin._apps:
@@ -226,4 +226,5 @@ def descargar_excel():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
 
