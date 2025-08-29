@@ -7,14 +7,18 @@
     <style>
         body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f9; margin: 0; }
         .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
-        h1 { color: #333; }
-        form { display: flex; flex-direction: column; gap: 1rem; }
-        .date-inputs { display: flex; gap: 1rem; justify-content: center; }
+        h1 { color: #333; margin-bottom: 1.5rem; }
+        form { display: flex; flex-direction: column; gap: 1.5rem; }
+        .date-inputs { display: flex; flex-direction: column; gap: 1rem; }
         .input-group { display: flex; flex-direction: column; align-items: flex-start; }
         label { margin-bottom: 0.5rem; color: #555; }
-        input[type="date"] { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
-        button { padding: 0.75rem; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background-color 0.2s; }
-        button:hover { background-color: #0056b3; }
+        input[type="date"] { padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; width: 100%; box-sizing: border-box; }
+        .button-group { display: flex; gap: 1rem; }
+        button { flex-grow: 1; padding: 0.75rem; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; transition: background-color 0.2s; }
+        .primary-btn { background-color: #007bff; color: white; }
+        .primary-btn:hover { background-color: #0056b3; }
+        .secondary-btn { background-color: #6c757d; color: white; }
+        .secondary-btn:hover { background-color: #5a6268; }
     </style>
 </head>
 <body>
@@ -31,8 +35,34 @@
                     <input type="date" id="fin" name="fin" required>
                 </div>
             </div>
-            <button type="submit">Generar y Descargar Excel</button>
+            <div class="button-group">
+                <!-- ** BOTÓN NUEVO ** -->
+                <button type="button" class="secondary-btn" onclick="setCurrentWeek()">Semana Actual</button>
+                <button type="submit" class="primary-btn">Generar y Descargar Excel</button>
+            </div>
         </form>
     </div>
+
+    <!-- ** SCRIPT DE JAVASCRIPT ** -->
+    <script>
+        function setCurrentWeek() {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0=Domingo, 1=Lunes, ..., 6=Sábado
+            
+            // Calcula la fecha del lunes de esta semana
+            const diffToMonday = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+            const monday = new Date(today.setDate(diffToMonday));
+            
+            // Calcula la fecha del domingo de esta semana
+            const sunday = new Date(monday);
+            sunday.setDate(monday.getDate() + 6);
+            
+            // Formatea las fechas a YYYY-MM-DD y las asigna a los campos
+            const format = (date) => date.toISOString().split('T')[0];
+            
+            document.getElementById('ini').value = format(monday);
+            document.getElementById('fin').value = format(sunday);
+        }
+    </script>
 </body>
 </html>
