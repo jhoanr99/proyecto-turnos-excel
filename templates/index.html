@@ -36,29 +36,37 @@
                 </div>
             </div>
             <div class="button-group">
-                <!-- ** BOTÓN NUEVO ** -->
                 <button type="button" class="secondary-btn" onclick="setCurrentWeek()">Semana Actual</button>
                 <button type="submit" class="primary-btn">Generar y Descargar Excel</button>
             </div>
         </form>
     </div>
 
-    <!-- ** SCRIPT DE JAVASCRIPT ** -->
+    <!-- ** SCRIPT DE JAVASCRIPT CORREGIDO ** -->
     <script>
         function setCurrentWeek() {
             const today = new Date();
             const dayOfWeek = today.getDay(); // 0=Domingo, 1=Lunes, ..., 6=Sábado
             
-            // Calcula la fecha del lunes de esta semana
-            const diffToMonday = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
-            const monday = new Date(today.setDate(diffToMonday));
+            // Crea una copia de la fecha de hoy para calcular el lunes sin modificar la original
+            const monday = new Date(today);
+
+            // Calcula la fecha del lunes de esta semana.
+            // Si hoy es Domingo (0), retrocede 6 días. Si es otro día, retrocede (día - 1) días.
+            const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+            monday.setDate(today.getDate() + diff);
             
-            // Calcula la fecha del domingo de esta semana
+            // Calcula la fecha del domingo de esta semana sumando 6 días al lunes
             const sunday = new Date(monday);
             sunday.setDate(monday.getDate() + 6);
             
-            // Formatea las fechas a YYYY-MM-DD y las asigna a los campos
-            const format = (date) => date.toISOString().split('T')[0];
+            // Formatea las fechas a YYYY-MM-DD de forma segura para evitar problemas de zona horaria
+            const format = (date) => {
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                return `${year}-${month}-${day}`;
+            };
             
             document.getElementById('ini').value = format(monday);
             document.getElementById('fin').value = format(sunday);
